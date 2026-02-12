@@ -18,7 +18,7 @@ import https from "node:https";
 import http from "node:http";
 import { URL } from "node:url";
 
-const OUT_JSON = path.resolve("data/schedule.json");
+const OUT_JSON = path.resolve("https://lunaria-schedule.lunariafactory.workers.dev/data/schedule.json");
 
 const MEMBERS = {
   "1": {
