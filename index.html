@@ -1,463 +1,191 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lunaria Factory｜配信者・VTuber・動画投稿者・クリエイターのコミュニティ</title>
-  <meta name="description" content="Lunaria Factoryは、配信者・VTuber・動画投稿者・イラストレーター・音楽クリエイターなど発信活動を行う人のためのコミュニティです。活動者同士がつながり、それぞれのペースで活動できる場所を目指しています。" />
-  <link rel="icon" href="images/icon.png" />
-  <link rel="stylesheet" href="css/style.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lunaria Factory｜配信者・VTuber・動画投稿者・クリエイターのコミュニティ</title>
+<meta name="description" content="Lunaria Factoryは、配信者・VTuber・動画投稿者・イラストレーター・音楽クリエイターなど発信活動を行う人のためのコミュニティです。" />
+<link rel="icon" href="images/icon.png" />
+<link rel="stylesheet" href="css/style.css" />
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Lunaria Factory",
-    "url": "https://lunariafactory.github.io/official",
-    "logo": "https://lunariafactory.github.io/official/images/icon.png",
-    "sameAs": [
-      "https://x.com/LunariaFactory"
-    ],
-    "description": "配信者・VTuber・動画投稿者・クリエイターのためのコミュニティ"
-  }
-  </script>
+<style>
+/* ===== ホーム：次の配信（2カラム固定・低く安定） ===== */
 
-  <!-- ホームの配信予定（中間型）用の追加CSS：既存CSSを壊さない最小 -->
-  <style>
-    /* 低く・横並びで安定させる */
-    .lfNext{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:12px 14px;
-      border-radius:18px;
-      background: rgba(255,255,255,.55);
-      border: 1px solid rgba(15, 22, 51, .08);
-    }
+.lfTap{
+  display:block;
+  color:inherit;
+  text-decoration:none;
+}
 
-    .lfWhen{
-      flex:0 0 auto;
-      min-width:auto;
-      padding:8px 10px;
-      border-radius:14px;
-      background: rgba(255,255,255,.75);
-      border: 1px solid rgba(15, 22, 51, .08);
-      line-height:1.1;
-      text-align:center;
-    }
+.lfNext{
+  display:grid;
+  grid-template-columns:110px 1fr auto;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  border-radius:18px;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(15,22,51,.08);
+}
 
-    .lfDate{
-      font-size:11px;
-      color: rgba(15,22,51,.55);
-      letter-spacing:.02em;
-      margin:0;
-      white-space:nowrap;
-    }
+.lfWhen{
+  padding:10px;
+  border-radius:14px;
+  background:rgba(255,255,255,.8);
+  border:1px solid rgba(15,22,51,.08);
+  text-align:center;
+  line-height:1.1;
+}
 
-    .lfTime{
-      font-size:16px;
-      font-weight:800;
-      color: rgba(15,22,51,.88);
-      margin-top:3px;
-      white-space:nowrap;
-    }
+.lfDate{
+  font-size:11px;
+  color:rgba(15,22,51,.55);
+  white-space:nowrap;
+}
 
-    .lfMain{
-      flex:1 1 auto;
-      min-width:0;
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
+.lfTime{
+  margin-top:4px;
+  font-size:16px;
+  font-weight:800;
+  color:rgba(15,22,51,.9);
+  white-space:nowrap;
+}
 
-    .lfAvatar{
-      width:40px;
-      height:40px;
-      border-radius:50%;
-      object-fit:cover;
-      border: 1px solid rgba(15, 22, 51, .10);
-      background: rgba(255,255,255,.8);
-      flex:0 0 auto;
-    }
+.lfInfo{
+  min-width:0;
+}
 
-    .lfText{ min-width:0; }
+.lfName{
+  font-size:14px;
+  font-weight:800;
+  margin-bottom:4px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 
-    .lfName{
-      font-size:14px;
-      font-weight:700;
-      color: rgba(15,22,51,.88);
-      margin-bottom:3px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
+.lfTitle{
+  font-size:13px;
+  color:rgba(15,22,51,.7);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
 
-    .lfTitle{
-      font-size:13px;
-      color: rgba(15,22,51,.72);
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      max-width: 34ch;
-    }
+.lfBtn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
 
-    .lfLink{
-      flex:0 0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-    }
-
-    .lfTap{
-      display:block;
-      color:inherit;
-      text-decoration:none;
-    }
-
-    .lfLink .iconBtn{
-      width:40px;
-      height:40px;
-      border-radius:14px;
-    }
-
-    /* スマホでだけタイトルを折り返しOKにして高さを抑える */
-    @media (max-width: 520px) {
-      .lfTitle{
-        white-space: normal;
-        max-width: none;
-      }
-    }
-  </style>
+.lfBtn .iconBtn{
+  width:42px;
+  height:42px;
+  border-radius:14px;
+}
+</style>
 </head>
 
 <body class="page-index">
-  <div class="bg" aria-hidden="true"></div>
+<div class="wrap">
 
-  <div class="wrap">
-    <!-- HERO -->
-    <header>
-      <div class="glass hero">
-        <div class="brand">
-          <h1>Lunaria Factory</h1>
-          <div class="sub">STREAMERS &amp; VIDEO CREATORS COMMUNITY</div>
-          <div class="tagline">配信・動画投稿・創作活動を行う人のための、活動拠点。</div>
-        </div>
-      </div>
-    </header>
+<section class="section">
+<div>
+<h2 class="panelTitle">配信予定</h2>
+<div id="scheduleSub" class="panelSub">読み込み中…</div>
 
-    <!-- PICK UP -->
-    <section class="section">
-      <h2 class="h">PICK UP</h2>
-      <p class="desc">活動中の配信者・動画投稿者</p>
+<div class="glass panel">
+<div id="scheduleItems">
+<div class="item">
+<div class="plus">＋</div>
+<div class="itemText">読み込み中…</div>
+</div>
+</div>
 
-      <div class="grid4">
-        <article class="glass member">
-          <div class="thumb"><img src="images/monii.png" alt="VTuber もにぃ"></div>
-          <div class="name">もにぃ</div>
-          <div class="social">
-            <a href="https://www.youtube.com/channel/UCU_nJbpHRZyZKtH7DO170MQ" aria-label="YouTube">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
-                <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
-              </svg>
-            </a>
-            <a href="https://www.twitch.tv/monii_friends" aria-label="Twitch">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
-              </svg>
-            </a>
-            <a href="https://x.com/monii_friends" aria-label="X">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
-              </svg>
-            </a>
-          </div>
-        </article>
+<div class="note">※ 配信を行っていない動画投稿者も活動しています</div>
 
-        <article class="glass member">
-          <div class="thumb"><img src="images/utsume.png" alt="VTuber 仁成ウツメ"></div>
-          <div class="name">仁成ウツメ</div>
-          <div class="social">
-            <a href="https://www.youtube.com/channel/UCs3VAhs3IFq8czVg2OGVQtg" aria-label="YouTube">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
-                <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
-              </svg>
-            </a>
-          </div>
-        </article>
+<div class="panelCta">
+<a class="btn-soft" href="schedule.html">
+配信予定一覧を見る
+</a>
+</div>
+</div>
+</div>
+</section>
 
-        <article class="glass member">
-          <div class="thumb"><img src="images/pepe.png" alt="VTuber ぺぺ"></div>
-          <div class="name">ぺぺ</div>
-          <div class="social">
-            <a href="https://www.twitch.tv/pepero0222" aria-label="Twitch">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
-              </svg>
-            </a>
-            <a href="https://x.com/pepe_twitch2" aria-label="X">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
-              </svg>
-            </a>
-          </div>
-        </article>
+</div>
 
-        <article class="glass member">
-          <div class="thumb"><img src="images/nanashi.png" alt="ナナ氏。"></div>
-          <div class="name">ナナ氏。</div>
-          <div class="social">
-            <a href="https://www.youtube.com/@N4n4sh1__maru__" aria-label="YouTube">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
-                <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
-              </svg>
-            </a>
-            <a href="https://x.com/n4n4sh1__maru__" aria-label="X">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
-              </svg>
-            </a>
-          </div>
-        </article>
-      </div>
+<script>
+const DATA_URL = "https://lunaria-schedule.lunariafactory.workers.dev/data/schedule.json";
 
-      <div class="centerCta">
-        <a class="btn-soft" href="streamers.html">
-          配信・動画投稿者一覧を見る
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M9 6l6 6-6 6" fill="none" stroke="rgba(47,103,255,.90)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </a>
-      </div>
-    </section>
+function esc(s){
+return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
 
-    <!-- 配信予定 + クリエイター -->
-    <section class="section">
-      <div class="two">
-        <div>
-          <h2 class="panelTitle" style="margin:0 0 10px;">配信予定</h2>
-          <div id="scheduleSub" class="panelSub" style="margin:0 0 14px;">読み込み中…</div>
+function platformLabel(p){
+return p==="T"?"Twitch":"YouTube";
+}
 
-          <div class="glass panel">
-            <div id="scheduleItems">
-              <!-- JSで差し替え -->
-              <div class="item">
-                <div class="plus">＋</div>
-                <div class="itemText">読み込み中…</div>
-              </div>
-            </div>
+function platformIconSvg(p){
+if(p==="T"){
+return `<svg class="icon" viewBox="0 0 24 24"><path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/></svg>`;
+}
+return `<svg class="icon" viewBox="0 0 24 24"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/><path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/></svg>`;
+}
 
-            <div class="note">※ 配信を行っていない動画投稿者も活動しています</div>
+async function loadSchedule(){
+const sub=document.getElementById("scheduleSub");
+const box=document.getElementById("scheduleItems");
 
-            <div class="panelCta">
-              <a class="btn-soft" href="schedule.html">
-                配信予定一覧を見る
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 6l6 6-6 6" fill="none" stroke="rgba(47,103,255,.90)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
+try{
+const res=await fetch(DATA_URL,{cache:"no-store"});
+if(!res.ok)throw new Error();
+const data=await res.json();
 
-        <div>
-          <h2 class="panelTitle" style="margin:0 0 10px;">クリエイター</h2>
-          <div class="panelSub" style="margin:0 0 14px;">イラスト・音楽・デザイン・その他創作活動を行うクリエイター</div>
+if(!data||!data.next){
+sub.textContent="本日の配信はありません";
+box.innerHTML='<div class="item"><div class="plus">＋</div><div class="itemText">本日の配信はありません</div></div>';
+return;
+}
 
-          <div class="glass panel">
-            <div class="miniGrid">
-              <div class="mini">
-                <div class="miniTop">
-                  <img src="images/yamicha.png" alt="やみちゃ">
-                  <div>
-                    <p class="miniName">やみちゃ</p>
-                    <div class="miniRole">HP作成</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mini">
-                <div class="miniTop">
-                  <img src="images/sample2.png" alt="準備中">
-                  <div>
-                    <p class="miniName">準備中</p>
-                    <div class="miniRole">動画編集</div>
-                  </div>
-                </div>
-              </div>
-              <div class="mini">
-                <div class="miniTop">
-                  <img src="images/sample2.png" alt="準備中">
-                  <div>
-                    <p class="miniName">準備中</p>
-                    <div class="miniRole">MIX</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+const n=data.next;
+const whoName=n.who?.name||"Lunaria Factory";
+const avatar=n.who?.avatar||"images/sample2.png";
+const title=n.title||"配信";
+const dateText=n.dateText||"";
+const timeText=n.timeText||"";
+const platform=n.platform||"Y";
+const link=n.link||"";
 
-            <div class="panelCta">
-              <a class="btn-soft" href="creators.html">
-                クリエイター一覧を見る
-                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M9 6l6 6-6 6" fill="none" stroke="rgba(47,103,255,.90)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+sub.textContent="次の配信";
 
-    <!-- ABOUT -->
-    <section class="section">
-      <div class="glass about">
-        <div class="aboutInner">
-          <div>
-            <h2 class="aboutH">ABOUT Lunaria Factory</h2>
-            <p class="aboutP">
-              Lunaria Factory は、配信・動画投稿などの発信活動を行う人、<br>
-              そして創作活動を行うクリエイターのためのコミュニティです。<br><br>
-              活動の頻度や規模は問いません。<br>
-              勢いに乗れなくても、立ち止まっても大丈夫。<br>
-              それぞれのペースで、活動を続けられる場所を目指しています。
-            </p>
-          </div>
+const card=`
+<div class="lfNext">
+<div class="lfWhen">
+<div class="lfDate">${esc(dateText)}</div>
+<div class="lfTime">${esc(timeText)}</div>
+</div>
 
-          <a class="btn-soft" href="https://discord.gg/MWxqmSSt" style="height:56px; border-radius:18px; padding:0 22px; font-size:14px; letter-spacing:.06em; justify-self:end;">
-            サーバーに参加する
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M9 6l6 6-6 6" fill="none" stroke="rgba(47,103,255,.90)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-    </section>
+<div class="lfInfo">
+<div class="lfName">${esc(whoName)}</div>
+<div class="lfTitle">${esc(title)}（${esc(platformLabel(platform))}）</div>
+</div>
 
-    <!-- FOOTER -->
-    <footer>
-      <div class="foot">
-        <div>© Lunaria Factory</div>
+<div class="lfBtn">
+${link?`<a class="iconBtn" href="${esc(link)}">${platformIconSvg(platform)}</a>`:""}
+</div>
+</div>`;
 
-        <div class="footlinks">
-          <a class="footbtn" href="https://x.com/LunariaFactory" aria-label="公式Xへ">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
-            </svg>
-            公式X <span class="small">@LunariaFactory</span>
-          </a>
+box.innerHTML=link?`<a class="lfTap" href="${esc(link)}">${card}</a>`:card;
 
-          <a class="footbtn" href="mailto:lunariafactory@gmail.com" aria-label="メールで問い合わせ">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3.5 6.5h17v11h-17v-11Z" fill="none" stroke="rgba(15,22,51,.60)" stroke-width="2" stroke-linejoin="round"/>
-              <path d="M4.5 7.5 12 13l7.5-5.5" fill="none" stroke="rgba(15,22,51,.60)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-            </svg>
-            お問い合わせ <span class="small">メール</span>
-          </a>
-        </div>
-      </div>
-    </footer>
-  </div>
+}catch{
+sub.textContent="配信予定を読み込めませんでした";
+box.innerHTML='<div class="item"><div class="plus">＋</div><div class="itemText">エラーが発生しました</div></div>';
+}
+}
 
-  <script>
-    const DATA_URL = "https://lunaria-schedule.lunariafactory.workers.dev/data/schedule.json";
+loadSchedule();
+</script>
 
-    function esc(s) {
-      return String(s ?? "").replace(/[&<>"']/g, c => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-      }[c]));
-    }
-
-    function platformLabel(p) {
-      if (p === "T") return "Twitch";
-      return "YouTube";
-    }
-
-    function platformIconSvg(p) {
-      if (p === "T") {
-        return `
-          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
-          </svg>`;
-      }
-      return `
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
-          <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
-        </svg>`;
-    }
-
-    async function loadSchedule() {
-      const sub = document.getElementById("scheduleSub");
-      const box = document.getElementById("scheduleItems");
-
-      try {
-        const res = await fetch(DATA_URL, { cache: "no-store" });
-        if (!res.ok) throw new Error("schedule fetch failed: " + res.status);
-        const data = await res.json();
-
-        if (!data || !data.next) {
-          sub.textContent = "本日の配信はありません";
-          box.innerHTML =
-            '<div class="item"><div class="plus">＋</div><div class="itemText">本日の配信はありません</div></div>' +
-            '<div class="item"><div class="plus">＋</div><div class="itemText">近日の配信予定を準備中です</div></div>';
-          return;
-        }
-
-        const n = data.next;
-        const whoName = (n.who && n.who.name) ? n.who.name : "Lunaria Factory";
-        const avatar = (n.who && n.who.avatar) ? n.who.avatar : "images/sample2.png";
-        const title = n.title ? n.title : "配信";
-        const dateText = n.dateText ? n.dateText : "";
-        const timeText = n.timeText ? n.timeText : "";
-        const platform = n.platform ? String(n.platform) : "Y";
-        const link = n.link ? String(n.link) : "";
-
-        /* 日時の二重表示をやめる：ここは固定文言にする */
-        sub.textContent = "次の配信";
-
-        const left = `
-          <div class="lfWhen">
-            <div class="lfDate">${esc(dateText || "予定")}</div>
-            <div class="lfTime">${esc(timeText || "--:--")}</div>
-          </div>`;
-
-        const main = `
-          <div class="lfMain">
-            <img class="lfAvatar" src="${esc(avatar)}" alt="${esc(whoName)}">
-            <div class="lfText">
-              <div class="lfName">${esc(whoName)}</div>
-              <div class="lfTitle">${esc(title)}（${esc(platformLabel(platform))}）</div>
-            </div>
-          </div>`;
-
-        const right = link
-          ? `<div class="lfLink">
-               <a class="iconBtn" href="${esc(link)}" aria-label="${esc(platformLabel(platform))}">${platformIconSvg(platform)}</a>
-             </div>`
-          : `<div class="lfLink"></div>`;
-
-        const card = `
-          <div class="lfNext">
-            ${left}
-            ${main}
-            ${right}
-          </div>`;
-
-        box.innerHTML = link
-          ? `<a class="lfTap" href="${esc(link)}" aria-label="次の配信を開く">${card}</a>`
-          : card;
-
-      } catch (e) {
-        sub.textContent = "配信予定を読み込めませんでした";
-        box.innerHTML =
-          '<div class="item"><div class="plus">＋</div><div class="itemText">配信予定を読み込めませんでした</div></div>' +
-          '<div class="item"><div class="plus">＋</div><div class="itemText">しばらくしてから再読み込みしてね</div></div>';
-      }
-    }
-
-    loadSchedule();
-  </script>
 </body>
 </html>
