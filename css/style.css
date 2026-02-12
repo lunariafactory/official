@@ -1340,3 +1340,46 @@ body.page-index #scheduleItems .lfLink .iconBtn{
   white-space: nowrap;
   border: 0;
 }
+
+.back-home{
+  display:inline-flex;
+  align-items:center;
+  gap:.5em;
+  margin: 10px 0 14px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  letter-spacing: .02em;
+  color: inherit;
+  background: rgba(255,255,255,.55);
+  border: 1px solid rgba(15,22,51,.10);
+  backdrop-filter: blur(10px);
+}
+
+.back-home:active{
+  transform: translateY(1px);
+}
+
+.fab-home{
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  color: inherit;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(15,22,51,.12);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(15,22,51,.12);
+  z-index: 50;
+}
+
+.fab-home:active{
+  transform: translateY(1px);
+}
+
