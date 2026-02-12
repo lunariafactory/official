@@ -20,21 +20,6 @@
     "description": "配信者・VTuber・動画投稿者・クリエイターのためのコミュニティ"
   }
   </script>
-
-  <style>
-    .nextStreamWrap{display:flex; flex-direction:column; gap:10px;}
-    .nextStreamMeta{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
-    .nextStreamDate{font-weight:700; letter-spacing:.04em;}
-    .nextStreamTime{opacity:.9;}
-    .nextStreamTitle{font-size:15px; line-height:1.5;}
-    .nextStreamWho{display:flex; align-items:center; gap:10px; margin-top:2px;}
-    .nextStreamAvatar{width:34px; height:34px; border-radius:50%; overflow:hidden; flex:0 0 34px;}
-    .nextStreamAvatar img{width:100%; height:100%; object-fit:cover; display:block;}
-    .nextStreamName{font-weight:700;}
-    .nextStreamPlatform{margin-left:auto;}
-    .nextStreamPlatform a{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none;}
-    .nextStreamEmpty{opacity:.85; line-height:1.6;}
-  </style>
 </head>
 
 <body class="page-index">
@@ -145,11 +130,15 @@
       <div class="two">
         <div>
           <h2 class="panelTitle" style="margin:0 0 10px;">配信予定</h2>
-          <div class="panelSub" id="nextStreamSub" style="margin:0 0 14px;">読み込み中…</div>
+          <div id="scheduleSub" class="panelSub" style="margin:0 0 14px;">読み込み中…</div>
 
           <div class="glass panel">
-            <div id="nextStream" class="nextStreamWrap" aria-live="polite">
-              <div class="nextStreamEmpty">読み込み中…</div>
+            <div id="scheduleItems">
+              <!-- JSで差し替え -->
+              <div class="item">
+                <div class="plus">＋</div>
+                <div class="itemText">読み込み中…</div>
+              </div>
             </div>
 
             <div class="note">※ 配信を行っていない動画投稿者も活動しています</div>
@@ -264,75 +253,63 @@
   </div>
 
   <script>
-  (function(){
-    const DATA_URL = "data/schedule.json";
-    const el = document.getElementById("nextStream");
-    const sub = document.getElementById("nextStreamSub");
+    const DATA_URL = "https://lunaria-schedule.lunariafactory.workers.dev/data/schedule.json";
 
-    const PLATFORM_LABEL = { Y: "YouTube", T: "Twitch" };
-
-    function esc(s){
-      return String(s ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
     }
 
-    function renderEmpty(){
-      sub.textContent = "直近の配信予定はありません";
-      el.innerHTML = `
-        <div class="nextStreamEmpty">
-          現在、直近の配信予定はありません。<br>
-          最新情報は公式Xをご確認ください。
-        </div>
-      `;
+    function platformLabel(p) {
+      if (p === "T") return "Twitch";
+      return "YouTube";
     }
 
-    function renderNext(ev){
-      sub.textContent = "NEXT STREAM";
-      const dateText = esc(ev.dateText || "");
-      const timeText = esc(ev.timeText || "");
-      const title = esc(ev.title || "");
-      const whoName = esc(ev.who?.name || "");
-      const avatar = esc(ev.who?.avatar || "images/sample2.png");
-      const link = esc(ev.link || "#");
-      const plat = PLATFORM_LABEL[ev.platform] || "";
+    async function loadSchedule() {
+      const sub = document.getElementById("scheduleSub");
+      const box = document.getElementById("scheduleItems");
 
-      el.innerHTML = `
-        <div class="nextStreamMeta">
-          <div class="nextStreamDate">${dateText}</div>
-          <div class="nextStreamTime">${timeText}</div>
-        </div>
+      try {
+        const res = await fetch(DATA_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error("schedule fetch failed: " + res.status);
+        const data = await res.json();
 
-        <div class="nextStreamTitle">${title}</div>
+        if (!data || !data.next) {
+          sub.textContent = "本日の配信はありません";
+          box.innerHTML =
+            '<div class="item"><div class="plus">＋</div><div class="itemText">本日の配信はありません</div></div>' +
+            '<div class="item"><div class="plus">＋</div><div class="itemText">近日の配信予定を準備中です</div></div>';
+          return;
+        }
 
-        <div class="nextStreamWho">
-          <div class="nextStreamAvatar"><img src="${avatar}" alt="${whoName}"></div>
-          <div class="nextStreamName">${whoName}</div>
+        const n = data.next;
+        const who = n.who && n.who.name ? n.who.name : "Lunaria Factory";
+        const when = (n.dateText ? n.dateText : "") + (n.timeText ? " " + n.timeText : "");
+        sub.textContent = when ? when : "次の配信";
 
-          <div class="nextStreamPlatform">
-            <a class="btn-soft" href="${link}" target="_blank" rel="noopener">
-              ${esc(plat)}で見る
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M9 6l6 6-6 6" fill="none" stroke="rgba(47,103,255,.90)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
-            </a>
-          </div>
-        </div>
-      `;
+        const title = n.title ? n.title : "配信";
+        const plat = platformLabel(n.platform);
+        const link = n.link ? String(n.link) : "";
+
+        const text = link
+          ? `<a href="${esc(link)}" style="color:inherit; text-decoration:none;">${esc(who)}：${esc(title)}（${esc(plat)}）</a>`
+          : `${esc(who)}：${esc(title)}（${esc(plat)}）`;
+
+        box.innerHTML =
+          `<div class="item">
+            <div class="plus">＋</div>
+            <div class="itemText">${text}</div>
+          </div>`;
+      } catch (e) {
+        sub.textContent = "配信予定を読み込めませんでした";
+        box.innerHTML =
+          '<div class="item"><div class="plus">＋</div><div class="itemText">配信予定を読み込めませんでした</div></div>' +
+          '<div class="item"><div class="plus">＋</div><div class="itemText">しばらくしてから再読み込みしてね</div></div>';
+      }
     }
 
-    fetch(DATA_URL, { cache: "no-store" })
-      .then(r => r.ok ? r.json() : Promise.reject(new Error("fetch failed")))
-      .then(data => {
-        const next = data?.next || null;
-        if(!next){ renderEmpty(); return; }
-        renderNext(next);
-      })
-      .catch(() => renderEmpty());
-  })();
+    loadSchedule();
   </script>
 </body>
 </html>

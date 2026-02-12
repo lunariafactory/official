@@ -7,13 +7,6 @@
   <meta name="description" content="Lunaria Factoryメンバーの配信予定・ライブスケジュール一覧です。ゲーム実況、参加型配信、雑談、コラボ配信など最新の予定を掲載しています。" />
   <link rel="icon" href="images/icon.png" />
   <link rel="stylesheet" href="css/style.css" />
-
-  <style>
-    .scheduleLoading{opacity:.8;}
-    .scheduleEmpty{opacity:.85; line-height:1.6; padding:18px;}
-    .row{align-items:center;}
-    .topic{margin:0;}
-  </style>
 </head>
 
 <body class="page-schedule">
@@ -32,8 +25,11 @@
         </div>
       </div>
 
-      <div id="scheduleList" class="scheduleLoading" aria-live="polite">
-        読み込み中…
+      <div id="scheduleRows">
+        <div class="empty">
+          読み込み中…
+          <div class="sub">しばらく待ってね。</div>
+        </div>
       </div>
     </section>
 
@@ -61,23 +57,16 @@
   </main>
 
   <script>
-  (function(){
-    const DATA_URL = "data/schedule.json";
-    const root = document.getElementById("scheduleList");
+    const DATA_URL = "https://lunaria-schedule.lunariafactory.workers.dev/data/schedule.json";
 
-    const PLATFORM_LABEL = { Y: "YouTube", T: "Twitch" };
-
-    function esc(s){
-      return String(s ?? "")
-        .replace(/&/g,"&amp;")
-        .replace(/</g,"&lt;")
-        .replace(/>/g,"&gt;")
-        .replace(/"/g,"&quot;")
-        .replace(/'/g,"&#039;");
+    function esc(s) {
+      return String(s ?? "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
     }
 
-    function iconSvg(platform){
-      if(platform === "T"){
+    function iconSvg(platform) {
+      if (platform === "T") {
         return `
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
@@ -90,55 +79,69 @@
         </svg>`;
     }
 
-    function renderEmpty(){
-      root.className = "scheduleEmpty";
-      root.innerHTML = `
-        現在、公開されている配信予定はありません。
-        <div class="sub">予定が決まり次第、ここに追加されます。</div>
-      `;
+    function renderEmpty(msg, sub) {
+      return `
+        <div class="empty">
+          ${esc(msg)}
+          <div class="sub">${esc(sub)}</div>
+        </div>`;
     }
 
-    function renderRows(events){
-      if(!events || !events.length){ renderEmpty(); return; }
-      root.className = "";
-      root.innerHTML = events.map(ev => {
-        const date = esc(ev.dateText || "");
-        const time = esc(ev.timeText || "");
-        const title = esc(ev.title || "");
-        const whoName = esc(ev.who?.name || "");
-        const avatar = esc(ev.who?.avatar || "images/sample2.png");
-        const link = esc(ev.link || "#");
-        const label = esc(PLATFORM_LABEL[ev.platform] || "");
-        return `
-          <div class="row">
-            <div class="when">
-              <div class="date">${date}</div>
-              <div class="time">${time}</div>
-            </div>
+    function renderRow(ev) {
+      const date = ev.dateText ? ev.dateText : "";
+      const time = ev.timeText ? ev.timeText : "";
+      const topic = ev.title ? ev.title : "配信";
+      const whoName = ev.who && ev.who.name ? ev.who.name : "Lunaria Factory";
+      const avatar = ev.who && ev.who.avatar ? ev.who.avatar : "images/sample2.png";
+      const link = ev.link ? String(ev.link) : "";
+      const platform = ev.platform ? String(ev.platform) : "Y";
 
-            <div class="info">
-              <p class="topic">${title}</p>
-              <div class="who">
-                <div class="avatar avatar--large"><img src="${avatar}" alt="${whoName}"></div>
-                <div class="whoName">${whoName}</div>
-              </div>
-            </div>
+      const linkBtn = link
+        ? `<a class="iconBtn" href="${esc(link)}" aria-label="${platform === "T" ? "Twitch" : "YouTube"}">${iconSvg(platform)}</a>`
+        : "";
 
-            <div class="links">
-              <a class="iconBtn" href="${link}" target="_blank" rel="noopener" aria-label="${label}">
-                ${iconSvg(ev.platform)}
-              </a>
+      return `
+        <div class="row">
+          <div class="when">
+            <div class="date">${esc(date)}</div>
+            <div class="time">${esc(time)}</div>
+          </div>
+
+          <div class="info">
+            <p class="topic">${esc(topic)}</p>
+            <div class="who">
+              <div class="avatar avatar--large"><img src="${esc(avatar)}" alt="${esc(whoName)}"></div>
+              <div class="whoName">${esc(whoName)}</div>
             </div>
           </div>
-        `;
-      }).join("");
+
+          <div class="links">
+            ${linkBtn}
+          </div>
+        </div>`;
     }
 
-    fetch(DATA_URL, { cache: "no-store" })
-      .then(r => r.ok ? r.json() : Promise.reject(new Error("fetch failed")))
-      .then(data => renderRows(data?.events || []))
-      .catch(() => renderEmpty());
-  })();
+    async function loadList() {
+      const root = document.getElementById("scheduleRows");
+
+      try {
+        const res = await fetch(DATA_URL, { cache: "no-store" });
+        if (!res.ok) throw new Error("schedule fetch failed: " + res.status);
+        const data = await res.json();
+
+        const events = (data && Array.isArray(data.events)) ? data.events : [];
+        if (!events.length) {
+          root.innerHTML = renderEmpty("現在、公開されている配信予定はありません", "予定が決まり次第、ここに追加されます。");
+          return;
+        }
+
+        root.innerHTML = events.map(renderRow).join("");
+      } catch (e) {
+        root.innerHTML = renderEmpty("配信予定を読み込めませんでした", "しばらくしてから再読み込みしてね。");
+      }
+    }
+
+    loadList();
   </script>
 </body>
 </html>
