@@ -9,8 +9,6 @@ const MEMBERS_URL = "data/members.json";
 
 // index.htmlのPICK UP（4人分）を members.json から埋める
 async function applyPickupMembers(members) {
-  // ここは「index.htmlが今の4人固定」前提で、idを決め打ち
-  // もし後で増やしたいなら、PICKUP用の配列を別jsonにしてもいい
   const map = [
     { id: "1", root: document.querySelector('[data-pickup="1"]') },
     { id: "2", root: document.querySelector('[data-pickup="2"]') },
@@ -22,7 +20,7 @@ async function applyPickupMembers(members) {
     const root = item.root;
     if (!root) continue;
 
-    const m = members[item.id];
+    const m = members?.[item.id];
     if (!m) continue;
 
     // name
@@ -36,23 +34,28 @@ async function applyPickupMembers(members) {
       img.alt = m.name ?? img.alt;
     }
 
-    // links
-    const aY = root.querySelector('a[data-social="Y"]');
-    const aT = root.querySelector('a[data-social="T"]');
-    const aX = root.querySelector('a[data-social="X"]');
+    // links (URLが無い場合は「消さずに非表示」にする)
+    setSocialLink(root, "Y", String(m.youtube ?? "").trim());
+    setSocialLink(root, "T", String(m.twitch ?? "").trim());
+    setSocialLink(root, "X", String(m.X ?? "").trim());
+  }
+}
 
-    if (aY) {
-      const u = String(m.youtube ?? "").trim();
-      if (u) aY.href = u; else aY.remove();
-    }
-    if (aT) {
-      const u = String(m.twitch ?? "").trim();
-      if (u) aT.href = u; else aT.remove();
-    }
-    if (aX) {
-      const u = String(m.X ?? "").trim();
-      if (u) aX.href = u; else aX.remove();
-    }
+function setSocialLink(root, code, url) {
+  const a = root.querySelector(`a[data-social="${code}"]`);
+  if (!a) return;
+
+  if (url) {
+    a.href = url;
+    a.style.display = "";
+    a.style.pointerEvents = "";
+    a.setAttribute("target", "_blank");
+    a.setAttribute("rel", "noopener noreferrer");
+  } else {
+    // href空のままだとクリックで変な挙動することがあるので確実に無効化
+    a.removeAttribute("href");
+    a.style.pointerEvents = "none";
+    a.style.display = "none";
   }
 }
 
@@ -124,7 +127,7 @@ async function loadScheduleAndRender(members) {
     const card = `<div class="lfNext">${left}${main}${right}</div>`;
 
     box.innerHTML = link
-      ? `<a class="lfTap" href="${esc(link)}" aria-label="配信を開く">${card}</a>`
+      ? `<a class="lfTap" href="${esc(link)}" aria-label="配信を開く" target="_blank" rel="noopener noreferrer">${card}</a>`
       : card;
 
   } catch (e) {
