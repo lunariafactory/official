@@ -1,18 +1,4 @@
 {
   "generatedAtUtc": "2026-02-12T00:00:00.000Z",
-  "next": {
-    "startUtc": "2026-02-12T12:00:00.000Z",
-    "dateText": "2026/02/12（木）",
-    "timeText": "21:00",
-    "title": "エンドフィールド #4",
-    "memberId": "1",
-    "platform": "Y",
-    "link": "https://www.youtube.com/channel/UCU_nJbpHRZyZKtH7DO170MQ",
-    "who": {
-      "id": "1",
-      "name": "もにぃ",
-      "avatar": "images/monii.png"
-    }
-  },
   "events": []
 }
