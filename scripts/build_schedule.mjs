@@ -32,6 +32,18 @@ const MEMBERS = {
     avatar: "images/utsume.png",
     youtube: "https://www.youtube.com/channel/UCs3VAhs3IFq8czVg2OGVQtg",
     twitch: ""
+  },
+  "3": {
+    name: "ペペ",
+    avatar: "images/pepe.png",
+    youtube: "",
+    twitch: "https://www.twitch.tv/pepero0222"
+  },
+  "4": {
+    name: "ナナ氏。",
+    avatar: "images/nanashi.png",
+    youtube: "https://www.youtube.com/@N4n4sh1__maru__",
+    twitch: ""
   }
 };
 
