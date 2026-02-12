@@ -1,0 +1,29 @@
+{
+  "1": {
+    "name": "もにぃ",
+    "youtube": "https://www.youtube.com/channel/UCU_nJbpHRZyZKtH7DO170MQ",
+    "twitch": "https://www.twitch.tv/monii_friends",
+    "X": "https://x.com/monii_friends",
+    "avatar": "images/monii.png"
+  },
+  "2": {
+    "name": "御狗丸ウツメ",
+    "youtube": "https://www.youtube.com/channel/UCs3VAhs3IFq8czVg20GVQtg",
+    "twitch": "",
+    "X": "",
+    "avatar": "images/utsume.png"
+  },
+  "3": {
+    "name": "ぺぺ",
+    "youtube": "",
+    "twitch": "https://www.twitch.tv/pepero0222",
+    "X": "https://x.com/pepe_twitch2",
+    "avatar": "images/pepe.png"
+  },
+  "4": {
+    "name": "ナナ氏。",
+    "link": "https://www.youtube.com/@N4n4sh1__maru__",
+    "X": "https://x.com/n4n4sh1__maru__",
+    "avatar": "images/nanashi.png"
+  }
+}
