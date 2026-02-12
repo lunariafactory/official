@@ -1302,7 +1302,7 @@ body.page-index #scheduleItems .lfTap{
 
 body.page-index #scheduleItems .lfNext{
   display:grid !important;
-  grid-template-columns: 110px 1fr 44px !important;
+  grid-template-columns: 90px 1fr 44px !important;
   align-items:center !important;
   gap:20px !important;
 }
