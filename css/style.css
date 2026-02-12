@@ -1323,3 +1323,7 @@ body.page-index #scheduleItems .lfLink{
   display:flex !important;
   justify-content:flex-end !important;
 }
+
+body.page-index #scheduleItems .lfLink .iconBtn{
+  pointer-events:none;
+}

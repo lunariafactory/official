@@ -327,9 +327,12 @@
 
         const right = link
           ? `<div class="lfLink">
-               <a class="iconBtn" href="${esc(link)}" aria-label="${esc(platformLabel(platform))}">${platformIconSvg(platform)}</a>
+               <span class="iconBtn" aria-label="${esc(platformLabel(platform))}">
+                 ${platformIconSvg(platform)}
+               </span>
              </div>`
           : `<div class="lfLink"></div>`;
+
 
         const card = `
           <div class="lfNext">
