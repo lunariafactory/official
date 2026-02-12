@@ -7,6 +7,7 @@
   <meta name="description" content="Lunaria Factoryは、配信者・VTuber・動画投稿者・イラストレーター・音楽クリエイターなど発信活動を行う人のためのコミュニティです。活動者同士がつながり、それぞれのペースで活動できる場所を目指しています。" />
   <link rel="icon" href="images/icon.png" />
   <link rel="stylesheet" href="css/style.css" />
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -20,13 +21,105 @@
     "description": "配信者・VTuber・動画投稿者・クリエイターのためのコミュニティ"
   }
   </script>
+
+  <!-- ホームの配信予定（中間型）用の追加CSS：既存CSSを壊さない最小 -->
+  <style>
+    .lfNext {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.55);
+      border: 1px solid rgba(15, 22, 51, .08);
+    }
+    .lfWhen {
+      flex: 0 0 auto;
+      min-width: 104px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.75);
+      border: 1px solid rgba(15, 22, 51, .08);
+      text-align: center;
+      line-height: 1.2;
+    }
+    .lfDate {
+      font-size: 12px;
+      color: rgba(15,22,51,.55);
+      letter-spacing: .02em;
+      margin-bottom: 6px;
+      white-space: nowrap;
+    }
+    .lfTime {
+      font-size: 18px;
+      font-weight: 700;
+      color: rgba(15,22,51,.88);
+      white-space: nowrap;
+    }
+
+    .lfMain {
+      flex: 1 1 auto;
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lfAvatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid rgba(15, 22, 51, .10);
+      background: rgba(255,255,255,.8);
+      flex: 0 0 auto;
+    }
+    .lfText {
+      min-width: 0;
+    }
+    .lfName {
+      font-size: 14px;
+      font-weight: 700;
+      color: rgba(15,22,51,.88);
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .lfTitle {
+      font-size: 13px;
+      color: rgba(15,22,51,.72);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .lfLink {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .lfTap {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* スマホで詰まったら縦寄せ */
+    @media (max-width: 520px) {
+      .lfNext { align-items: flex-start; }
+      .lfWhen { min-width: 92px; }
+      .lfTitle { white-space: normal; }
+    }
+  </style>
 </head>
 
 <body class="page-index">
   <div class="bg" aria-hidden="true"></div>
 
   <div class="wrap">
-    <!-- HERO（上のボタン列は消した） -->
+    <!-- HERO -->
     <header>
       <div class="glass hero">
         <div class="brand">
@@ -80,7 +173,7 @@
         </article>
 
         <article class="glass member">
-          <div class="thumb"><img src="images/pepe.png" alt="vtuber ぺぺ"></div>
+          <div class="thumb"><img src="images/pepe.png" alt="VTuber ぺぺ"></div>
           <div class="name">ぺぺ</div>
           <div class="social">
             <a href="https://www.twitch.tv/pepero0222" aria-label="Twitch">
@@ -227,7 +320,7 @@
       </div>
     </section>
 
-    <!-- FOOTER（Discordなし、公式Xとメールだけ） -->
+    <!-- FOOTER -->
     <footer>
       <div class="foot">
         <div>© Lunaria Factory</div>
@@ -266,6 +359,20 @@
       return "YouTube";
     }
 
+    function platformIconSvg(p) {
+      if (p === "T") {
+        return `
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
+          </svg>`;
+      }
+      return `
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
+          <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
+        </svg>`;
+    }
+
     async function loadSchedule() {
       const sub = document.getElementById("scheduleSub");
       const box = document.getElementById("scheduleItems");
@@ -284,23 +391,50 @@
         }
 
         const n = data.next;
-        const who = n.who && n.who.name ? n.who.name : "Lunaria Factory";
-        const when = (n.dateText ? n.dateText : "") + (n.timeText ? " " + n.timeText : "");
-        sub.textContent = when ? when : "次の配信";
-
+        const whoName = (n.who && n.who.name) ? n.who.name : "Lunaria Factory";
+        const avatar = (n.who && n.who.avatar) ? n.who.avatar : "images/sample2.png";
         const title = n.title ? n.title : "配信";
-        const plat = platformLabel(n.platform);
+        const dateText = n.dateText ? n.dateText : "";
+        const timeText = n.timeText ? n.timeText : "";
+        const platform = n.platform ? String(n.platform) : "Y";
         const link = n.link ? String(n.link) : "";
 
-        const text = link
-          ? `<a href="${esc(link)}" style="color:inherit; text-decoration:none;">${esc(who)}：${esc(title)}（${esc(plat)}）</a>`
-          : `${esc(who)}：${esc(title)}（${esc(plat)}）`;
+        // サブは「日付 + 時刻」だけにして、本文は中間型カードに寄せる
+        sub.textContent = (dateText && timeText) ? (dateText + "　" + timeText) : "次の配信";
 
-        box.innerHTML =
-          `<div class="item">
-            <div class="plus">＋</div>
-            <div class="itemText">${text}</div>
+        const left = `
+          <div class="lfWhen">
+            <div class="lfDate">${esc(dateText || "予定")}</div>
+            <div class="lfTime">${esc(timeText || "--:--")}</div>
           </div>`;
+
+        const main = `
+          <div class="lfMain">
+            <img class="lfAvatar" src="${esc(avatar)}" alt="${esc(whoName)}">
+            <div class="lfText">
+              <div class="lfName">${esc(whoName)}</div>
+              <div class="lfTitle">${esc(title)}（${esc(platformLabel(platform))}）</div>
+            </div>
+          </div>`;
+
+        const right = link
+          ? `<div class="lfLink">
+               <a class="iconBtn" href="${esc(link)}" aria-label="${esc(platformLabel(platform))}">${platformIconSvg(platform)}</a>
+             </div>`
+          : `<div class="lfLink"></div>`;
+
+        const card = `
+          <div class="lfNext">
+            ${left}
+            ${main}
+            ${right}
+          </div>`;
+
+        // クリック範囲を大きくしたいなら、全体をリンクにする（linkがある時だけ）
+        box.innerHTML = link
+          ? `<a class="lfTap" href="${esc(link)}" aria-label="次の配信を開く">${card}</a>`
+          : card;
+
       } catch (e) {
         sub.textContent = "配信予定を読み込めませんでした";
         box.innerHTML =
