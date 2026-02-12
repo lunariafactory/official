@@ -211,146 +211,140 @@
             <h2 class="aboutH">ABOUT Lunaria Factory</h2>
             <p class="aboutP">
               Lunaria Factory は、配信・動画投稿などの発信活動を行う人、<br>
-              そして創作活動を行うクリエイターのためのコミュニティです。<br><br>
-              活動の頻度や規模は問いません。<br>
-              勢いに乗れなくても、立ち止まっても大丈夫。<br>
-              それぞれのペースで、活動を続けられる場所を目指しています。
+              そして創作活動を行うクリエイターのためのコミュニティです。<br>
+              “それぞれのペースで続けられる活動拠点” を目指しています。
             </p>
           </div>
-
-          <a class="btn-soft" href="https://discord.gg/MWxqmSSt" style="height:56px; border-radius:18px; padding:0 22px; font-size:14px; letter-spacing:.06em; justify-self:end;">
-            サーバーに参加する
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M9 6l6 6-6 6" fill="none" stroke="rgba(47,103,255,.90)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
         </div>
       </div>
     </section>
 
-    <!-- FOOTER -->
     <footer>
       <div class="foot">
         <div>© Lunaria Factory</div>
-
         <div class="footlinks">
-          <a class="footbtn" href="https://x.com/LunariaFactory" aria-label="公式Xへ">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
-            </svg>
-            公式X <span class="small">@LunariaFactory</span>
-          </a>
-
-          <a class="footbtn" href="mailto:lunariafactory@gmail.com" aria-label="メールで問い合わせ">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M3.5 6.5h17v11h-17v-11Z" fill="none" stroke="rgba(15,22,51,.60)" stroke-width="2" stroke-linejoin="round"/>
-              <path d="M4.5 7.5 12 13l7.5-5.5" fill="none" stroke="rgba(15,22,51,.60)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-            </svg>
-            お問い合わせ <span class="small">メール</span>
-          </a>
+          <a class="footbtn" href="https://x.com/LunariaFactory">公式X</a>
+          <a class="footbtn" href="mailto:lunariafactory.official@gmail.com">お問い合わせ <span class="small">(メール)</span></a>
         </div>
       </div>
     </footer>
   </div>
 
   <script>
-    const DATA_URL = "https://lunaria-schedule.lunariafactory.workers.dev/data/schedule.json";
+    // ---- 配信予定（中間型）: JSONを読んで直近1件表示 ----
+    (async () => {
+      const sub = document.getElementById("scheduleSub");
+      const items = document.getElementById("scheduleItems");
 
-    function esc(s) {
-      return String(s ?? "").replace(/[&<>"']/g, c => ({
-        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
-      }[c]));
-    }
+      const fmtJp = (iso) => {
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return { dateText: "日時未定", timeText: "" };
+        const y = d.getFullYear();
+        const m = String(d.getMonth() + 1).padStart(2, "0");
+        const day = String(d.getDate()).padStart(2, "0");
+        const w = ["日","月","火","水","木","金","土"][d.getDay()];
+        const hh = String(d.getHours()).padStart(2, "0");
+        const mm = String(d.getMinutes()).padStart(2, "0");
+        return { dateText: `${y}/${m}/${day}（${w}）`, timeText: `${hh}:${mm}` };
+      };
 
-    function platformLabel(p) {
-      if (p === "T") return "Twitch";
-      return "YouTube";
-    }
+      const pickPlatform = (url) => {
+        const u = (url || "").toLowerCase();
+        if (u.includes("youtube.com") || u.includes("youtu.be")) return "YouTube";
+        if (u.includes("twitch.tv")) return "Twitch";
+        return "Link";
+      };
 
-    function platformIconSvg(p) {
-      if (p === "T") {
+      const platformIcon = (platform) => {
+        if (platform === "YouTube") {
+          return `
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
+              <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
+            </svg>
+          `;
+        }
+        if (platform === "Twitch") {
+          return `
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
+            </svg>
+          `;
+        }
         return `
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
-          </svg>`;
-      }
-      return `
-        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
-          <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
-        </svg>`;
-    }
-
-    async function loadSchedule() {
-      const sub = document.getElementById("scheduleSub");
-      const box = document.getElementById("scheduleItems");
+            <path d="M10 14a2 2 0 1 0 0 4h2a2 2 0 0 0 0-4h-2Zm0-8a2 2 0 1 0 0 4h2a2 2 0 1 0 0-4h-2Z" fill="#2f67ff"/>
+          </svg>
+        `;
+      };
 
       try {
-        const res = await fetch(DATA_URL, { cache: "no-store" });
-        if (!res.ok) throw new Error("schedule fetch failed: " + res.status);
+        const res = await fetch("data/schedule.json", { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch failed");
         const data = await res.json();
 
-        if (!data || !data.next) {
-          sub.textContent = "本日の配信はありません";
-          box.innerHTML =
-            '<div class="item"><div class="plus">＋</div><div class="itemText">本日の配信はありません</div></div>' +
-            '<div class="item"><div class="plus">＋</div><div class="itemText">近日の配信予定を準備中です</div></div>';
+        const list = Array.isArray(data) ? data : (Array.isArray(data.events) ? data.events : []);
+        const now = Date.now();
+
+        const future = list
+          .filter(e => e && e.start && (new Date(e.start)).getTime() >= now - 5 * 60 * 1000)
+          .sort((a,b) => (new Date(a.start)).getTime() - (new Date(b.start)).getTime());
+
+        if (!future.length) {
+          sub.textContent = "次の配信は未定です";
+          items.innerHTML = `
+            <div class="item">
+              <div class="plus">＋</div>
+              <div class="itemText">最新の予定はまだありません</div>
+            </div>
+          `;
           return;
         }
 
-        const n = data.next;
-        const whoName = (n.who && n.who.name) ? n.who.name : "Lunaria Factory";
-        const avatar = (n.who && n.who.avatar) ? n.who.avatar : "images/sample2.png";
-        const title = n.title ? n.title : "配信";
-        const dateText = n.dateText ? n.dateText : "";
-        const timeText = n.timeText ? n.timeText : "";
-        const platform = n.platform ? String(n.platform) : "Y";
-        const link = n.link ? String(n.link) : "";
+        const e = future[0];
+        const { dateText, timeText } = fmtJp(e.start);
+        const name = e.name || "配信者";
+        const title = e.title || "配信予定";
+        const url = e.url || "#";
+        const avatar = e.avatar || "images/sample2.png";
+        const platform = pickPlatform(url);
 
-        /* 日時の二重表示をやめる：ここは固定文言にする */
         sub.textContent = "次の配信";
 
-        const left = `
-          <div class="lfWhen">
-            <div class="lfDate">${esc(dateText || "予定")}</div>
-            <div class="lfTime">${esc(timeText || "--:--")}</div>
-          </div>`;
+        items.innerHTML = `
+          <a class="lfTap" href="${url}" target="_blank" rel="noopener noreferrer">
+            <div class="lfNext">
+              <div class="lfWhen">
+                <div class="lfDate">${dateText}</div>
+                <div class="lfTime">${timeText}</div>
+              </div>
 
-        const main = `
-          <div class="lfMain">
-            <img class="lfAvatar" src="${esc(avatar)}" alt="${esc(whoName)}">
-            <div class="lfText">
-              <div class="lfName">${esc(whoName)}</div>
-              <div class="lfTitle">${esc(title)}（${esc(platformLabel(platform))}）</div>
+              <div class="lfMain">
+                <img class="lfAvatar" src="${avatar}" alt="${name}">
+                <div class="lfText">
+                  <div class="lfName">${name}</div>
+                  <div class="lfTitle">${title}（${platform}）</div>
+                </div>
+              </div>
+
+              <div class="lfLink">
+                <div class="iconBtn" aria-label="${platform}">
+                  ${platformIcon(platform)}
+                </div>
+              </div>
             </div>
-          </div>`;
-
-        const right = link
-          ? `<div class="lfLink">
-               <a class="iconBtn" href="${esc(link)}" aria-label="${esc(platformLabel(platform))}">${platformIconSvg(platform)}</a>
-             </div>`
-          : `<div class="lfLink"></div>`;
-
-        const card = `
-          <div class="lfNext">
-            ${left}
-            ${main}
-            ${right}
-          </div>`;
-
-        box.innerHTML = link
-          ? `<a class="lfTap" href="${esc(link)}" aria-label="次の配信を開く">${card}</a>`
-          : card;
-
-      } catch (e) {
-        sub.textContent = "配信予定を読み込めませんでした";
-        box.innerHTML =
-          '<div class="item"><div class="plus">＋</div><div class="itemText">配信予定を読み込めませんでした</div></div>' +
-          '<div class="item"><div class="plus">＋</div><div class="itemText">しばらくしてから再読み込みしてね</div></div>';
+          </a>
+        `;
+      } catch (err) {
+        sub.textContent = "読み込みに失敗しました";
+        items.innerHTML = `
+          <div class="item">
+            <div class="plus">＋</div>
+            <div class="itemText">schedule.json を確認してね</div>
+          </div>
+        `;
       }
-    }
-
-    loadSchedule();
+    })();
   </script>
 </body>
 </html>
