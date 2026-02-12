@@ -1,4 +1,61 @@
 {
-  "generatedAtUtc": "2026-02-12T00:00:00.000Z",
-  "events": []
+  "generatedAtUtc": "2026-02-12T09:00:00.000Z",
+  "next": {
+    "startUtc": "2026-02-12T12:00:00.000Z",
+    "dateText": "2026/02/12（木）",
+    "timeText": "21:00",
+    "title": "エンドフィールド #4",
+    "memberId": "1",
+    "platform": "Y",
+    "link": "https://www.youtube.com/channel/UCU_nJbpHRZyZKtH7DO170MQ",
+    "who": {
+      "id": "1",
+      "name": "もにぃ",
+      "avatar": "images/monii.png"
+    }
+  },
+  "events": [
+    {
+      "startUtc": "2026-02-12T12:00:00.000Z",
+      "dateText": "2026/02/12（木）",
+      "timeText": "21:00",
+      "title": "エンドフィールド #4",
+      "memberId": "1",
+      "platform": "Y",
+      "link": "https://www.youtube.com/channel/UCU_nJbpHRZyZKtH7DO170MQ",
+      "who": {
+        "id": "1",
+        "name": "もにぃ",
+        "avatar": "images/monii.png"
+      }
+    },
+    {
+      "startUtc": "2026-02-14T13:00:00.000Z",
+      "dateText": "2026/02/14（土）",
+      "timeText": "22:00",
+      "title": "バレンタイン歌枠",
+      "memberId": "2",
+      "platform": "T",
+      "link": "",
+      "who": {
+        "id": "2",
+        "name": "仁成ウツメ",
+        "avatar": "images/utsume.png"
+      }
+    },
+    {
+      "startUtc": "2026-02-16T11:00:00.000Z",
+      "dateText": "2026/02/16（月）",
+      "timeText": "20:00",
+      "title": "参加型ゲーム配信",
+      "memberId": "1",
+      "platform": "Y",
+      "link": "https://www.youtube.com/channel/UCU_nJbpHRZyZKtH7DO170MQ",
+      "who": {
+        "id": "1",
+        "name": "もにぃ",
+        "avatar": "images/monii.png"
+      }
+    }
+  ]
 }
