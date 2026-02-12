@@ -1188,20 +1188,12 @@ body.page-schedule .whoName{
   text-overflow: ellipsis;
 }
 
-/* ===== index 配信予定（横1列を強制・grid版） ===== */
-
-body.page-index .lfTap{
-  display:block;
-  color: inherit;
-  text-decoration: none;
-}
-
-/* これで「左 / 中 / 右」を強制 */
-body.page-index .lfNext{
+/* ===== FIX: index 配信予定（横1列を強制 + タイトル切れ対策） ===== */
+body.page-index #scheduleItems .lfNext{
   display:grid !important;
-  grid-template-columns: 140px 1fr 44px;
-  align-items:center;
-  column-gap:20px;
+  grid-template-columns: minmax(120px, max-content) minmax(0, 1fr) 44px;
+  align-items:center !important;
+  column-gap: 20px;
 
   padding:18px 20px;
   border-radius:22px;
@@ -1210,42 +1202,44 @@ body.page-index .lfNext{
 }
 
 /* 左：日時 */
-body.page-index .lfWhen{
-  grid-column: 1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
+body.page-index #scheduleItems .lfWhen{
+  grid-column: 1 !important;
+  display:flex !important;
+  flex-direction:column !important;
+  justify-content:center !important;
 
-  background:none;
-  border:none;
-  padding:0;
-  text-align:left;
+  background:none !important;
+  border:none !important;
+  padding:0 !important;
+  text-align:left !important;
 }
 
-body.page-index .lfDate{
+body.page-index #scheduleItems .lfDate{
   font-size:12px;
   font-weight:700;
   color: rgba(15,22,51,.55);
   margin:0;
+  white-space:nowrap;
 }
 
-body.page-index .lfTime{
+body.page-index #scheduleItems .lfTime{
   font-size:24px;
   font-weight:900;
   color: rgba(15,22,51,.92);
   margin-top:4px;
+  white-space:nowrap;
 }
 
-/* 中央：アイコン＋名前＋タイトル */
-body.page-index .lfMain{
-  grid-column: 2;
-  display:flex;
-  align-items:center;
+/* 中央：アイコン＋テキスト */
+body.page-index #scheduleItems .lfMain{
+  grid-column: 2 !important;
+  display:flex !important;
+  align-items:center !important;
   gap:16px;
-  min-width:0;
+  min-width:0 !important; /* これがないと “右が切れる” が起きやすい */
 }
 
-body.page-index .lfAvatar{
+body.page-index #scheduleItems .lfAvatar{
   width:48px;
   height:48px;
   border-radius:50%;
@@ -1255,11 +1249,11 @@ body.page-index .lfAvatar{
   flex:0 0 auto;
 }
 
-body.page-index .lfText{
-  min-width:0;
+body.page-index #scheduleItems .lfText{
+  min-width:0 !important;
 }
 
-body.page-index .lfName{
+body.page-index #scheduleItems .lfName{
   font-size:15px;
   font-weight:900;
   color: rgba(15,22,51,.85);
@@ -1269,36 +1263,31 @@ body.page-index .lfName{
   text-overflow:ellipsis;
 }
 
-body.page-index .lfTitle{
+/* タイトルは “1行固定で切る” をやめて、2行までOKにする */
+body.page-index #scheduleItems .lfTitle{
   font-size:13px;
   font-weight:700;
   color: rgba(15,22,51,.65);
   margin-top:6px;
-  white-space:nowrap;
-  overflow:hidden;
+
+  white-space:normal !important;
+  overflow:hidden !important;
   text-overflow:ellipsis;
+  display:-webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 /* 右：リンク */
-body.page-index .lfLink{
-  grid-column: 3;
-  display:flex;
-  justify-content:flex-end;
+body.page-index #scheduleItems .lfLink{
+  grid-column: 3 !important;
+  display:flex !important;
+  justify-content:flex-end !important;
+  align-items:center !important;
 }
 
-body.page-index .lfLink .iconBtn{
+body.page-index #scheduleItems .lfLink .iconBtn{
   width:44px;
   height:44px;
   border-radius:16px;
-}
-
-/* スマホは縦でOK（任意） */
-@media (max-width: 520px){
-  body.page-index .lfNext{
-    grid-template-columns: 1fr;
-    row-gap: 10px;
-  }
-  body.page-index .lfLink{
-    justify-content:flex-start;
-  }
 }
