@@ -7,6 +7,13 @@
   <meta name="description" content="Lunaria Factoryメンバーの配信予定・ライブスケジュール一覧です。ゲーム実況、参加型配信、雑談、コラボ配信など最新の予定を掲載しています。" />
   <link rel="icon" href="images/icon.png" />
   <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    .scheduleLoading{opacity:.8;}
+    .scheduleEmpty{opacity:.85; line-height:1.6; padding:18px;}
+    .row{align-items:center;}
+    .topic{margin:0;}
+  </style>
 </head>
 
 <body class="page-schedule">
@@ -23,77 +30,25 @@
         <div class="h">
           <div class="k">SCHEDULE</div>
         </div>
-</div>
-
-      <!-- 予定がある例（1件=1行） -->
-      <div class="row">
-        <div class="when">
-          <div class="date">2026/02/12（木）</div>
-          <div class="time">21:00</div>
-        </div>
-
-        <div class="info">
-          <p class="topic">雑談：最近の制作進捗 / 相談会</p>
-          <div class="who">
-            <div class="avatar avatar--large"><img src="images/sample2.png" alt="Azumi"></div>
-            <div class="whoName">Azumi</div>
-          </div>
-</div>
-
-        <div class="links">
-          <a class="iconBtn" href="#" aria-label="YouTube">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
-              <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
-            </svg>
-          </a>
-</div>
       </div>
 
-      <div class="row">
-        <div class="when">
-          <div class="date">2026/02/14（土）</div>
-          <div class="time">20:30</div>
-        </div>
-
-        <div class="info">
-          <p class="topic">ゲーム：みんなでわいわい（参加型）</p>
-          <div class="who">
-            <div class="avatar avatar--large"><img src="images/sample2.png" alt="Sora"></div>
-            <div class="whoName">Sora</div>
-          </div>
-</div>
-
-        <div class="links">
-          <a class="iconBtn" href="#" aria-label="Twitch">
-            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
-            </svg>
-          </a>
-        </div>
+      <div id="scheduleList" class="scheduleLoading" aria-live="polite">
+        読み込み中…
       </div>
-
-      <!-- 予定がない状態を使いたいなら、上のrow群を消してこれを出す -->
-      <!--
-      <div class="empty">
-        現在、公開されている配信予定はありません
-        <div class="sub">予定が決まり次第、ここに追加されます。</div>
-      </div>
-      -->
     </section>
 
     <footer>
       <div class="foot">
         <div>© Lunaria Factory</div>
         <div class="footlinks">
-          <a class="footbtn" href="#" aria-label="公式Xへ">
+          <a class="footbtn" href="https://x.com/LunariaFactory" aria-label="公式Xへ">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
             </svg>
             公式X <span class="small">@LunariaFactory</span>
           </a>
 
-          <a class="footbtn" href="mailto:contact@example.com" aria-label="メールで問い合わせ">
+          <a class="footbtn" href="mailto:lunariafactory@gmail.com" aria-label="メールで問い合わせ">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3.5 6.5h17v11h-17v-11Z" fill="none" stroke="rgba(15,22,51,.60)" stroke-width="2" stroke-linejoin="round"/>
               <path d="M4.5 7.5 12 13l7.5-5.5" fill="none" stroke="rgba(15,22,51,.60)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
@@ -104,5 +59,86 @@
       </div>
     </footer>
   </main>
+
+  <script>
+  (function(){
+    const DATA_URL = "data/schedule.json";
+    const root = document.getElementById("scheduleList");
+
+    const PLATFORM_LABEL = { Y: "YouTube", T: "Twitch" };
+
+    function esc(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+
+    function iconSvg(platform){
+      if(platform === "T"){
+        return `
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
+          </svg>`;
+      }
+      return `
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
+          <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
+        </svg>`;
+    }
+
+    function renderEmpty(){
+      root.className = "scheduleEmpty";
+      root.innerHTML = `
+        現在、公開されている配信予定はありません。
+        <div class="sub">予定が決まり次第、ここに追加されます。</div>
+      `;
+    }
+
+    function renderRows(events){
+      if(!events || !events.length){ renderEmpty(); return; }
+      root.className = "";
+      root.innerHTML = events.map(ev => {
+        const date = esc(ev.dateText || "");
+        const time = esc(ev.timeText || "");
+        const title = esc(ev.title || "");
+        const whoName = esc(ev.who?.name || "");
+        const avatar = esc(ev.who?.avatar || "images/sample2.png");
+        const link = esc(ev.link || "#");
+        const label = esc(PLATFORM_LABEL[ev.platform] || "");
+        return `
+          <div class="row">
+            <div class="when">
+              <div class="date">${date}</div>
+              <div class="time">${time}</div>
+            </div>
+
+            <div class="info">
+              <p class="topic">${title}</p>
+              <div class="who">
+                <div class="avatar avatar--large"><img src="${avatar}" alt="${whoName}"></div>
+                <div class="whoName">${whoName}</div>
+              </div>
+            </div>
+
+            <div class="links">
+              <a class="iconBtn" href="${link}" target="_blank" rel="noopener" aria-label="${label}">
+                ${iconSvg(ev.platform)}
+              </a>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    fetch(DATA_URL, { cache: "no-store" })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error("fetch failed")))
+      .then(data => renderRows(data?.events || []))
+      .catch(() => renderEmpty());
+  })();
+  </script>
 </body>
 </html>

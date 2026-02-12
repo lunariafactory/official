@@ -20,6 +20,21 @@
     "description": "配信者・VTuber・動画投稿者・クリエイターのためのコミュニティ"
   }
   </script>
+
+  <style>
+    .nextStreamWrap{display:flex; flex-direction:column; gap:10px;}
+    .nextStreamMeta{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;}
+    .nextStreamDate{font-weight:700; letter-spacing:.04em;}
+    .nextStreamTime{opacity:.9;}
+    .nextStreamTitle{font-size:15px; line-height:1.5;}
+    .nextStreamWho{display:flex; align-items:center; gap:10px; margin-top:2px;}
+    .nextStreamAvatar{width:34px; height:34px; border-radius:50%; overflow:hidden; flex:0 0 34px;}
+    .nextStreamAvatar img{width:100%; height:100%; object-fit:cover; display:block;}
+    .nextStreamName{font-weight:700;}
+    .nextStreamPlatform{margin-left:auto;}
+    .nextStreamPlatform a{display:inline-flex; align-items:center; gap:8px; padding:10px 14px; border-radius:14px; text-decoration:none;}
+    .nextStreamEmpty{opacity:.85; line-height:1.6;}
+  </style>
 </head>
 
 <body class="page-index">
@@ -76,18 +91,6 @@
                 <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
               </svg>
             </a>
-<!--
-            <a href="#" aria-label="Twitch">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
-              </svg>
-            </a>
-            <a href="#" aria-label="X">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
-              </svg>
-            </a>
--->
           </div>
         </article>
 
@@ -95,14 +98,6 @@
           <div class="thumb"><img src="images/pepe.png" alt="vtuber ぺぺ"></div>
           <div class="name">ぺぺ</div>
           <div class="social">
-<!--
-            <a href="#" aria-label="YouTube">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5A3 3 0 0 0 2.4 7.2 31.7 31.7 0 0 0 2 12a31.7 31.7 0 0 0 .4 4.8 3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 22 12a31.7 31.7 0 0 0-.4-4.8Z" fill="#ff2e2e"/>
-                <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
-              </svg>
-            </a>
--->
             <a href="https://www.twitch.tv/pepero0222" aria-label="Twitch">
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
@@ -126,13 +121,6 @@
                 <path d="M10.2 15.3V8.7L15.8 12l-5.6 3.3Z" fill="#fff"/>
               </svg>
             </a>
-<!--
-            <a href="#" aria-label="Twitch">
-              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M4 3h18v11l-5 5h-4l-2 2H8v-2H5V6L4 3Zm3 3v10h3v2l2-2h5l3-3V6H7Zm9 2h2v5h-2V8Zm-5 0h2v5h-2V8Z" fill="#7b3cff"/>
-              </svg>
-            </a>
--->
             <a href="https://x.com/n4n4sh1__maru__" aria-label="X">
               <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
@@ -157,16 +145,11 @@
       <div class="two">
         <div>
           <h2 class="panelTitle" style="margin:0 0 10px;">配信予定</h2>
-          <div class="panelSub" style="margin:0 0 14px;">本日の配信はありません</div>
+          <div class="panelSub" id="nextStreamSub" style="margin:0 0 14px;">読み込み中…</div>
 
           <div class="glass panel">
-            <div class="item">
-              <div class="plus">＋</div>
-              <div class="itemText">本日の配信はありません</div>
-            </div>
-            <div class="item">
-              <div class="plus">＋</div>
-              <div class="itemText">近日の配信予定を準備中です</div>
+            <div id="nextStream" class="nextStreamWrap" aria-live="polite">
+              <div class="nextStreamEmpty">読み込み中…</div>
             </div>
 
             <div class="note">※ 配信を行っていない動画投稿者も活動しています</div>
@@ -245,7 +228,6 @@
             </p>
           </div>
 
-          <!-- ここはボタンとして残す（リンク先は後で差し替え） -->
           <a class="btn-soft" href="https://discord.gg/MWxqmSSt" style="height:56px; border-radius:18px; padding:0 22px; font-size:14px; letter-spacing:.06em; justify-self:end;">
             サーバーに参加する
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -262,7 +244,6 @@
         <div>© Lunaria Factory</div>
 
         <div class="footlinks">
-          <!-- 公式X：ここにURLを入れる -->
           <a class="footbtn" href="https://x.com/LunariaFactory" aria-label="公式Xへ">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M18.7 3H21l-6.6 7.5L22 21h-6.2l-4.9-6.4L5.3 21H3l7.1-8.1L2 3h6.3l4.4 5.8L18.7 3Zm-1.1 16h1.3L7.2 4.9H5.8l11.8 14.1Z" fill="#111"/>
@@ -270,7 +251,6 @@
             公式X <span class="small">@LunariaFactory</span>
           </a>
 
-          <!-- お問い合わせメール：mailto に差し替え -->
           <a class="footbtn" href="mailto:lunariafactory@gmail.com" aria-label="メールで問い合わせ">
             <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
               <path d="M3.5 6.5h17v11h-17v-11Z" fill="none" stroke="rgba(15,22,51,.60)" stroke-width="2" stroke-linejoin="round"/>
@@ -282,5 +262,77 @@
       </div>
     </footer>
   </div>
+
+  <script>
+  (function(){
+    const DATA_URL = "data/schedule.json";
+    const el = document.getElementById("nextStream");
+    const sub = document.getElementById("nextStreamSub");
+
+    const PLATFORM_LABEL = { Y: "YouTube", T: "Twitch" };
+
+    function esc(s){
+      return String(s ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+    }
+
+    function renderEmpty(){
+      sub.textContent = "直近の配信予定はありません";
+      el.innerHTML = `
+        <div class="nextStreamEmpty">
+          現在、直近の配信予定はありません。<br>
+          最新情報は公式Xをご確認ください。
+        </div>
+      `;
+    }
+
+    function renderNext(ev){
+      sub.textContent = "NEXT STREAM";
+      const dateText = esc(ev.dateText || "");
+      const timeText = esc(ev.timeText || "");
+      const title = esc(ev.title || "");
+      const whoName = esc(ev.who?.name || "");
+      const avatar = esc(ev.who?.avatar || "images/sample2.png");
+      const link = esc(ev.link || "#");
+      const plat = PLATFORM_LABEL[ev.platform] || "";
+
+      el.innerHTML = `
+        <div class="nextStreamMeta">
+          <div class="nextStreamDate">${dateText}</div>
+          <div class="nextStreamTime">${timeText}</div>
+        </div>
+
+        <div class="nextStreamTitle">${title}</div>
+
+        <div class="nextStreamWho">
+          <div class="nextStreamAvatar"><img src="${avatar}" alt="${whoName}"></div>
+          <div class="nextStreamName">${whoName}</div>
+
+          <div class="nextStreamPlatform">
+            <a class="btn-soft" href="${link}" target="_blank" rel="noopener">
+              ${esc(plat)}で見る
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" fill="none" stroke="rgba(47,103,255,.90)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    fetch(DATA_URL, { cache: "no-store" })
+      .then(r => r.ok ? r.json() : Promise.reject(new Error("fetch failed")))
+      .then(data => {
+        const next = data?.next || null;
+        if(!next){ renderEmpty(); return; }
+        renderNext(next);
+      })
+      .catch(() => renderEmpty());
+  })();
+  </script>
 </body>
 </html>
