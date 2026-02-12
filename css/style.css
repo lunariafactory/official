@@ -1291,3 +1291,35 @@ body.page-index #scheduleItems .lfLink .iconBtn{
   height:44px;
   border-radius:16px;
 }
+
+/* ===== index 配信予定 横並び 強制 fix ===== */
+
+body.page-index #scheduleItems .lfTap{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+}
+
+body.page-index #scheduleItems .lfNext{
+  display:grid !important;
+  grid-template-columns: 140px 1fr 44px !important;
+  align-items:center !important;
+  gap:20px !important;
+}
+
+body.page-index #scheduleItems .lfWhen{
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+body.page-index #scheduleItems .lfMain{
+  display:flex !important;
+  align-items:center !important;
+  gap:16px !important;
+  min-width:0 !important;
+}
+
+body.page-index #scheduleItems .lfLink{
+  display:flex !important;
+  justify-content:flex-end !important;
+}
