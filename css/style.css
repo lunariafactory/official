@@ -1188,7 +1188,7 @@ body.page-schedule .whoName{
   text-overflow: ellipsis;
 }
 
-/* ===== index 配信予定（横1列レイアウト） ===== */
+/* ===== index 配信予定（横1列） ===== */
 body.page-index .lfNext{
   display:flex;
   align-items:center;
