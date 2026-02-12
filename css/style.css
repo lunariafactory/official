@@ -1188,53 +1188,56 @@ body.page-schedule .whoName{
   text-overflow: ellipsis;
 }
 
-/* ===== index 配信予定（横1列） ===== */
+/* ===== index 配信予定（完全1行フラット版） ===== */
+
 body.page-index .lfNext{
   display:flex;
   align-items:center;
-  gap:14px;
-  padding:14px 16px;
-  border-radius:18px;
-  background: rgba(255,255,255,.60);
-  border: 1px solid rgba(15,22,51,.08);
+  gap:20px;
+  padding:18px 20px;
+  border-radius:22px;
+  background: rgba(255,255,255,.65);
+  border: 1px solid rgba(15,22,51,.10);
 }
 
+/* 左：日時 */
 body.page-index .lfWhen{
   flex:0 0 auto;
-  padding:8px 12px;
-  border-radius:16px;
-  background: rgba(255,255,255,.85);
-  border: 1px solid rgba(15,22,51,.10);
-  text-align:center;
-  line-height:1.2;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  background:none;
+  border:none;
+  padding:0;
+  text-align:left;
 }
 
 body.page-index .lfDate{
   font-size:12px;
-  font-weight:800;
+  font-weight:700;
   color: rgba(15,22,51,.55);
-  white-space:nowrap;
+  margin:0;
 }
 
 body.page-index .lfTime{
-  font-size:18px;
+  font-size:24px;
   font-weight:900;
-  color: rgba(15,22,51,.85);
+  color: rgba(15,22,51,.92);
   margin-top:4px;
-  white-space:nowrap;
 }
 
+/* 中央：アイコン＋名前＋タイトル */
 body.page-index .lfMain{
   flex:1 1 auto;
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:16px;
   min-width:0;
 }
 
 body.page-index .lfAvatar{
-  width:44px;
-  height:44px;
+  width:48px;
+  height:48px;
   border-radius:50%;
   object-fit:cover;
   border:1px solid rgba(15,22,51,.12);
@@ -1247,29 +1250,29 @@ body.page-index .lfText{
 }
 
 body.page-index .lfName{
-  font-size:14px;
+  font-size:15px;
   font-weight:900;
   color: rgba(15,22,51,.85);
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  margin:0;
 }
 
 body.page-index .lfTitle{
   font-size:13px;
-  font-weight:800;
+  font-weight:700;
   color: rgba(15,22,51,.65);
+  margin-top:6px;
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
 }
 
+/* 右：リンク */
 body.page-index .lfLink{
   flex:0 0 auto;
 }
 
 body.page-index .lfLink .iconBtn{
-  width:40px;
-  height:40px;
-  border-radius:14px;
+  width:44px;
+  height:44px;
+  border-radius:16px;
 }
