@@ -1383,3 +1383,25 @@ body.page-index #scheduleItems .lfLink .iconBtn{
   transform: translateY(1px);
 }
 
+/* Discord専用ボタン */
+body.page-index .btn-discord{
+  height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: none;
+  background: #5865F2;
+  box-shadow: 0 16px 28px rgba(88,101,242,.35);
+  color: #fff;
+  font-weight: 950;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform .14s ease, box-shadow .14s ease, background .14s ease;
+}
+
+body.page-index .btn-discord:hover{
+  background: #4752C4;
+  transform: translateY(-2px);
+  box-shadow: 0 20px 34px rgba(88,101,242,.45);
+}
