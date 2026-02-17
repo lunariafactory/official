@@ -13,7 +13,7 @@ async function applyPickupMembers(members) {
     { id: "4", root: document.querySelector('[data-pickup="1"]') },
     { id: "1", root: document.querySelector('[data-pickup="2"]') },
     { id: "2", root: document.querySelector('[data-pickup="3"]') },
-    { id: "3", root: document.querySelector('[data-pickup="4"]') }
+    { id: "5", root: document.querySelector('[data-pickup="4"]') }
   ];
 
   for (const item of map) {
@@ -144,4 +144,3 @@ async function main() {
 }
 
 main();
-

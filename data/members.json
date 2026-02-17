@@ -1,14 +1,14 @@
 {
   "1": {
     "name": "もにぃ",
-    "youtube": "https://www.youtube.com/@monii_friends",
+    "youtube": "https://www.youtube.com/channel/UCU_nJbpHRZyZKtH7DO170MQ",
     "twitch": "https://www.twitch.tv/monii_friends",
     "X": "https://x.com/monii_friends",
     "avatar": "images/monii.png"
   },
   "2": {
     "name": "仁成ウツメ",
-    "youtube": "https://www.youtube.com/@zinsei_yakubyogami",
+    "youtube": "https://www.youtube.com/channel/UCs3VAhs3IFq8czVg20GVQtg",
     "twitch": "",
     "X": "",
     "avatar": "images/utsume.png"
@@ -23,9 +23,15 @@
   "4": {
     "name": "ナナ氏。",
     "youtube": "https://www.youtube.com/@N4n4sh1__maru__",
+    "twitch": "",
     "X": "https://x.com/n4n4sh1__maru__",
     "avatar": "images/nanashi.png"
+  },
+  "5": {
+    "name": "y4kitor1",
+    "youtube": "https://www.twitch.tv/y4kitori_002",
+    "twitch": "",
+    "X": "",
+    "avatar": "images/yakitori.png"
   }
 }
-
-
