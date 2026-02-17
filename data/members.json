@@ -40,5 +40,12 @@
     "twitch": "https://www.twitch.tv/pukumaruchan_?lang=ja",
     "X": "",
     "avatar": "images/niko.png"
+  },
+  "7": {
+    "name": "灯炉ぼたん",
+    "youtube": "https://www.youtube.com/channel/UCQUrs2gbc0uOsfnMIHAg7vQ",
+    "twitch": "https://m.twitch.tv/touro_botan",
+    "X": "https://x.com/touro_botan",
+    "avatar": "images/botan.png"
   }
 }
