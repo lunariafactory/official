@@ -11,8 +11,8 @@ const MEMBERS_URL = "data/members.json";
 async function applyPickupMembers(members) {
   const map = [
     { id: "4", root: document.querySelector('[data-pickup="1"]') },
-    { id: "1", root: document.querySelector('[data-pickup="2"]') },
-    { id: "2", root: document.querySelector('[data-pickup="3"]') },
+    { id: "7", root: document.querySelector('[data-pickup="2"]') },
+    { id: "1", root: document.querySelector('[data-pickup="3"]') },
     { id: "5", root: document.querySelector('[data-pickup="4"]') }
   ];
 
