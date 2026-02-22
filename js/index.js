@@ -73,7 +73,7 @@ async function loadScheduleAndRender(members) {
   const box = document.getElementById("scheduleItems");
 
   try {
-    const data = await fetchJson(SCHEDULE_URL, { noStore: true });
+    const data = await fetchJson(SCHEDULE_URL);
     const events = Array.isArray(data?.events) ? data.events : [];
 
     if (events.length === 0) {

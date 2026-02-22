@@ -61,8 +61,8 @@ async function loadList() {
 
   try {
     const [members, data] = await Promise.all([
-      fetchJson(MEMBERS_URL, { noStore: true }),
-      fetchJson(SCHEDULE_URL, { noStore: true })
+      fetchJson(MEMBERS_URL),
+      fetchJson(SCHEDULE_URL)
     ]);
 
     const events = (data && Array.isArray(data.events)) ? data.events : [];
