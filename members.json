@@ -1,0 +1,51 @@
+{
+  "1": {
+    "name": "もにぃ",
+    "youtube": "https://www.youtube.com/@monii_friends",
+    "twitch": "https://www.twitch.tv/monii_friends",
+    "X": "https://x.com/monii_friends",
+    "avatar": "images/monii.png"
+  },
+  "2": {
+    "name": "仁成ウツメ",
+    "youtube": "https://www.youtube.com/@zinsei_yakubyogami",
+    "twitch": "",
+    "X": "https://x.com/Zinsei_2026",
+    "avatar": "images/utsume.png"
+  },
+  "3": {
+    "name": "ぺぺ",
+    "youtube": "",
+    "twitch": "https://www.twitch.tv/pepero0222",
+    "X": "https://x.com/pepe_twitch2",
+    "avatar": "images/pepe.png"
+  },
+  "4": {
+    "name": "ナナ氏。",
+    "youtube": "https://www.youtube.com/@N4n4sh1__maru__",
+    "twitch": "",
+    "X": "https://x.com/n4n4sh1__maru__",
+    "avatar": "images/nanashi.png"
+  },
+  "5": {
+    "name": "y4kitori",
+    "youtube": "https://www.youtube.com/channel/UCKD4TIEt2BB0IJfGCIAqeKw",
+    "twitch": "https://www.twitch.tv/y4kitori_002",
+    "X": "",
+    "avatar": "images/yakitori.png"
+  },
+  "6": {
+    "name": "水星にこ",
+    "youtube": "https://www.youtube.com/@mizuhoshi_nico",
+    "twitch": "https://www.twitch.tv/pukumaruchan_?lang=ja",
+    "X": "",
+    "avatar": "images/niko.png"
+  },
+  "7": {
+    "name": "灯炉ぼたん",
+    "youtube": "https://www.youtube.com/channel/UCQUrs2gbc0uOsfnMIHAg7vQ",
+    "twitch": "https://m.twitch.tv/touro_botan",
+    "X": "https://x.com/touro_botan",
+    "avatar": "images/botan.png"
+  }
+}
