@@ -47,5 +47,12 @@
     "twitch": "https://m.twitch.tv/touro_botan",
     "X": "https://x.com/touro_botan",
     "avatar": "images/botan.png"
+  },
+  "8": {
+    "name": "TRIGGER-TILTIL",
+    "youtube": "https://www.youtube.com/@kuroeda-garaku",
+    "twitch": "",
+    "X": "https://x.com/kuroeda_garaku",
+    "avatar": "images/trigger.png"
   }
 }
