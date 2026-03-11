@@ -10,10 +10,10 @@ const MEMBERS_URL = "data/members.json";
 // index.htmlのPICK UP（4人分）を members.json から埋める
 async function applyPickupMembers(members) {
   const map = [
-    { id: "4", root: document.querySelector('[data-pickup="1"]') },
-    { id: "7", root: document.querySelector('[data-pickup="2"]') },
+    { id: "7", root: document.querySelector('[data-pickup="1"]') },
+    { id: "2", root: document.querySelector('[data-pickup="2"]') },
     { id: "1", root: document.querySelector('[data-pickup="3"]') },
-    { id: "5", root: document.querySelector('[data-pickup="4"]') }
+    { id: "8", root: document.querySelector('[data-pickup="4"]') }
   ];
 
   for (const item of map) {
