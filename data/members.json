@@ -54,5 +54,26 @@
     "twitch": "",
     "X": "https://x.com/TRIGGER3724",
     "avatar": "images/trigger.png"
+  },
+  "9": {
+    "name": "黒枝 我楽",
+    "youtube": "https://www.youtube.com/channel/UCKEWBosOfgYGBu1yRnKdZ6g",
+    "twitch": "https://www.twitch.tv/kuroeda_garaku",
+    "X": "https://x.com/kuroeda_garaku",
+    "avatar": "images/garaku.png"
+  },
+  "10": {
+    "name": "わんださん",
+    "youtube": "",
+    "twitch": "https://www.twitch.tv/potato20251023",
+    "X": "https://x.com/Wond4san2312",
+    "avatar": "images/wander.png"
+  },
+  "11": {
+    "name": "紅葉のぞむ",
+    "youtube": "https://www.youtube.com/channel/UC9pVUyLoQE_dpVv5lEIciSA",
+    "twitch": "https://www.twitch.tv/momijinozomu_vt",
+    "X": "",
+    "avatar": "images/nozomu.png"
   }
 }
