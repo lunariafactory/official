@@ -96,5 +96,19 @@
     "twitch": "https://www.twitch.tv/motchi2525",
     "X": "",
     "avatar": "images/mochi.png"
+  },
+  "15": {
+    "name": "川藤まいや",
+    "youtube": "https://youtube.com/@maiya-kawato?si=aDTIafxk7FOBEahp",
+    "twitch": "",
+    "X": "https://x.com/maiya_kawato?s=21",
+    "avatar": "images/maiya.png"
+  },
+  "16": {
+    "name": "リーヴル",
+    "youtube": "https://youtube.com/@livre_kumasan?si=9YhqTZhlp1XRIsdN",
+    "twitch": "",
+    "X": "https://x.com/livre_76000",
+    "avatar": "images/livre.png"
   }
 }
