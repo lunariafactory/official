@@ -110,5 +110,19 @@
     "twitch": "",
     "X": "https://x.com/livre_76000",
     "avatar": "images/livre.png"
+  },
+  "17": {
+    "name": "ゆう3",
+    "youtube": "https://www.youtube.com/@%E3%82%86%E3%81%86%E3%81%95%E3%82%933_3",
+    "twitch": "",
+    "X": "https://x.com/yuusan3_3",
+    "avatar": "images/yuu3.png"
+  },
+  "18": {
+    "name": "月輪てと",
+    "youtube": "https://www.youtube.com/@TUKINOWATETO",
+    "twitch": "",
+    "X": "https://x.com/TUKINOWA_TETO3",
+    "avatar": "images/teto.png"
   }
 }
